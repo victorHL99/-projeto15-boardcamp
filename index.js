@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 import db from './db.js';
 import categoriesRouter from './routes/categoriesRouter.js';
+import gamesRouter from './routes/gamesRouter.js';
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors());
 dotenv.config();
 
 app.use(categoriesRouter);
+app.use(gamesRouter);
 
 
 const port = process.env.PORT || 4000;
