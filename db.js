@@ -15,6 +15,6 @@ const db = new Pool({
     password,
     database
 });
-
+    console.log('DB is connected');
 export default db;
 
