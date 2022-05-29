@@ -1,12 +1,19 @@
 import pg from 'pg';
 
-const {Poll} = pg;
+const {Pool} = pg;
+
+const user = 'postgres';
+const password = '164902';
+const host = 'localhost';
+const port = 5432;
+const database = 'boardcamp';
+
 const db = new Pool({
-    host : 'localhost',
-    port : 5432,
-    user : 'postgres',
-    password : '164902',
-    database : 'polls'
+    host,
+    port,
+    user,
+    password,
+    database
 });
 
 export default db;
