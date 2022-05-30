@@ -49,8 +49,12 @@ export async function getCustomerId(req,res){
 export async function postCustomers(req,res){
     console.log("Passando pela controller post customers");
     const {name, phone, cpf, birthday} = req.body;
-
+    console.log(req.body);
     try{
-        
+        const resultCustomer = await db.query(`INSERT INTO customers (name, phone, cpf, birthday) VALUES ($1, $2, $3, $4)`, [name, phone, cpf, birthday]);
+        res.sendStatus(201);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
     }
 }

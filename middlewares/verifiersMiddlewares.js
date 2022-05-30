@@ -64,7 +64,7 @@ export async function vPostGamesMid(req,res,next){
     }
 }
 
-export async function vPostCustomersMid(req, res, next){
+export async function vPostCustomerMid(req, res, next){
     console.log("Passando pela middleware post customers")
     const {name, phone, cpf, birthday} = req.body;
 

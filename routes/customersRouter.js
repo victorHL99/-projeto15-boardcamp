@@ -1,6 +1,6 @@
 import {Router} from 'express';
 
-import {getCustomers, getCustomerId} from '../controllers/customersController.js';
+import {getCustomers, getCustomerId, postCustomers} from '../controllers/customersController.js';
 import {vPostCustomerMid} from '../middlewares/verifiersMiddlewares.js';
 
 const customersRouter = Router();
