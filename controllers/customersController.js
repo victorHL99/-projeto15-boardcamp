@@ -57,4 +57,29 @@ export async function postCustomers(req,res){
         console.log(error);
         res.sendStatus(500);
     }
+};
+
+export async function putCustomers(req,res){
+    console.log("Passando pela controller put customers");
+    const {id} = req.params;
+    const {name, phone, cpf, birthday} = req.body;
+    try{
+        const resultCustomer = await db.query(`
+            UPDATE customers
+            SET name = $1, phone = $2, cpf = $3, birthday = $4
+            WHERE id = $5
+            RETURNING *;`, [name, phone, cpf, birthday, id]);
+
+        const customer = resultCustomer.rows[0];
+
+        if(!customer){
+            res.sendStatus(404);
+            return;
+        }
+
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 }
