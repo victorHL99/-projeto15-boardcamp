@@ -4,7 +4,6 @@ import {getCategories, postCategories} from '../controllers/categoriesController
 import {vPostCategoriesMid} from '../middlewares/verifiersMiddlewares.js';
 
 const categoriesRouter = Router();
-console.log("Passando pela rota categorias");
 
 categoriesRouter.get("/categories", getCategories);
 categoriesRouter.post("/categories", vPostCategoriesMid ,postCategories);
