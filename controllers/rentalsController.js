@@ -101,7 +101,6 @@ export async function postRentals(req,res){
 
 export async function postReturnRental(req, res){
     const {id} = req.params;
-    const dateToday = dayjs().format('YYYY-MM-DD');
 
     try {
         const resultRental = await db.query(`SELECT * FROM rentals WHERE id = $1`, [id]);
@@ -118,7 +117,7 @@ export async function postReturnRental(req, res){
             res.sendStatus(400);
             return;
         }
-
+        const dateToday = dayjs().format('YYYY-MM-DD');
         const daysDelay = dayjs(dateToday).diff(dayjs(rentDate), 'day');
 
         const delayFee = 

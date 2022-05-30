@@ -4,7 +4,6 @@ import {getCustomers, getCustomerId, postCustomers, putCustomers } from '../cont
 import {vPostCustomerMid, vPutCustomerMid} from '../middlewares/verifiersMiddlewares.js';
 
 const customersRouter = Router();
-console.log("Passando pela rota customers");
 
 customersRouter.get("/customers", getCustomers);
 customersRouter.get("/customers/:id", getCustomerId);

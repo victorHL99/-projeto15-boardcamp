@@ -3,7 +3,6 @@ import JoiDate from "@joi/date";
 import db from "../db.js";
 
 export async function vPostCategoriesMid(req, res, next){
-    console.log("Passando pela middleware post categories")
     const {name} = req.body;
     const Joi = JoiInitial.extend(JoiDate);
 
@@ -20,7 +19,6 @@ export async function vPostCategoriesMid(req, res, next){
 
     try{
         const resultCategories = await db.query('SELECT * FROM categories WHERE name = $1', [name]);
-        console.log(resultCategories.rows);
         if(resultCategories.rows.length > 0){
             res.sendStatus(409);
             return;
@@ -28,13 +26,11 @@ export async function vPostCategoriesMid(req, res, next){
             next();
         }
     } catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
 };
 
 export async function vPostGamesMid(req,res,next){
-    console.log("Passando pela middleware post games")
     const {name,image,stockTotal,categoryId,pricePerDay} = req.body;
     const Joi = JoiInitial.extend(JoiDate);
 
@@ -61,13 +57,11 @@ export async function vPostGamesMid(req,res,next){
             next();
         }
     } catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
 }
 
 export async function vPostCustomerMid(req, res, next){
-    console.log("Passando pela middleware post customers")
     const {name, phone, cpf, birthday} = req.body;
 
     const Joi = JoiInitial.extend(JoiDate);
@@ -95,14 +89,12 @@ export async function vPostCustomerMid(req, res, next){
             next();
         }
     } catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
 
 }
 
 export async function vPutCustomerMid(req, res, next){
-    console.log("Passando pela middleware post customers")
     const {name, phone, cpf, birthday} = req.body;
 
     const Joi = JoiInitial.extend(JoiDate);
@@ -124,14 +116,12 @@ export async function vPutCustomerMid(req, res, next){
     try{
         next()
     } catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
 
 }
 
 export async function vPostRentalsMid(req, res, next){
-    console.log("Passando pela middleware post rentals")
 
     const {customerId, gameId, daysRented} = req.body;
     const Joi = JoiInitial.extend(JoiDate);
