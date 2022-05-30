@@ -5,6 +5,7 @@ import db from "../db.js";
 export async function vPostCategoriesMid(req, res, next){
     console.log("Passando pela middleware post categories")
     const {name} = req.body;
+    const Joi = JoiInitial.extend(JoiDate);
 
     const schema = Joi.object({
         name: Joi.string().required()
@@ -35,6 +36,7 @@ export async function vPostCategoriesMid(req, res, next){
 export async function vPostGamesMid(req,res,next){
     console.log("Passando pela middleware post games")
     const {name,image,stockTotal,categoryId,pricePerDay} = req.body;
+    const Joi = JoiInitial.extend(JoiDate);
 
     const schema = Joi.object({
         name: Joi.string().required(),
@@ -126,4 +128,25 @@ export async function vPutCustomerMid(req, res, next){
         res.sendStatus(500);
     }
 
+}
+
+export async function vPostRentalsMid(req, res, next){
+    console.log("Passando pela middleware post rentals")
+
+    const {customerId, gameId, daysRented} = req.body;
+    const Joi = JoiInitial.extend(JoiDate);
+
+    const schema = Joi.object({
+        customerId: Joi.number().required().integer(),
+        gameId: Joi.number().required().integer().positive(),
+        daysRented: Joi.number().required().integer().positive().greater(0),
+    })
+
+    const verifySchema = schema.validate({customerId, gameId, daysRented}).error;
+    if(verifySchema){
+        res.sendStatus(400);
+        return;
+    }
+
+    next();
 }
