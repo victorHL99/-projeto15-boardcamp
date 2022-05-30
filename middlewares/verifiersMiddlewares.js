@@ -1,4 +1,5 @@
-import Joi from "joi";
+import JoiInitial from "joi";
+import JoiDate from "@joi/date";
 import db from "../db.js";
 
 export async function vPostCategoriesMid(req, res, next){
@@ -61,4 +62,39 @@ export async function vPostGamesMid(req,res,next){
         console.log(error);
         res.sendStatus(500);
     }
+}
+
+export async function vPostCustomersMid(req, res, next){
+    console.log("Passando pela middleware post customers")
+    const {name, phone, cpf, birthday} = req.body;
+
+    const Joi = JoiInitial.extend(JoiDate);
+
+    const schema = Joi.object({
+        name: Joi.string().required(),
+        phone: Joi.string().required().pattern(new RegExp(/^\d{10,11}$/)),
+        cpf: Joi.string().required().pattern(new RegExp(/^\d{11}$/)),
+        birthday: Joi.date().format("YYYY-MM-DD").required()
+    });
+
+    const verifySchema = schema.validate({name, phone, cpf, birthday}).error;
+
+    if(verifySchema){
+        res.sendStatus(400);
+        return;
+    }
+
+    try{
+        const resultCustomer = await db.query('SELECT * FROM customers WHERE cpf = $1',[cpf]);
+        if(resultCustomer.rows.length > 0){
+            res.sendStatus(409);
+            return;
+        } else {
+            next();
+        }
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
 }
